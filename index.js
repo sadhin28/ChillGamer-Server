@@ -100,13 +100,13 @@ async function run() {
             const result = await WatchCollection.insertOne(newReviews);
             res.send(result)
         })
-        //get a reviews
+        //get a watch list
         app.get('/watch_list', async (req, res) => {
             const coursor = WatchCollection.find();
             const result = await coursor.toArray();
             res.send(result)
         })
-        //get watch list
+        //get watch  list by id
         app.get('/watch_list/:id',async(req,res)=>{
             const id=req.params.id;
             const query={_id:new ObjectId(id)};
