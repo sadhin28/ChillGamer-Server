@@ -42,6 +42,22 @@ async function run() {
             const result = await coursor.toArray();
             res.send(result)
         })
+  
+         //post a reviews
+         app.post('/reviews',async(req,res)=>{
+            const newReviews = req.body;
+            res.send(newReviews);
+            const result = await GameReviewCollection.insertOne(newReviews);
+            res.send(result)
+         })
+
+         //get a reviews
+         app.get('/reviews',async(req,res)=>{
+            const coursor = GameReviewCollection.find();
+            const result = await coursor.toArray();
+            res.send(result)
+         })
+
 
         //Get last loging by email
         app.patch('/user', async (req, res) => {
@@ -54,6 +70,8 @@ async function run() {
             }
             const result = await usersCollection.updateOne(filter, updateDoc)
         })
+
+       
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
