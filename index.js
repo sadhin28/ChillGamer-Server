@@ -30,77 +30,11 @@ async function run() {
         const GameReviewCollection = client.db("GameReview").collection('Reviews')
         const WatchCollection = client.db("WatchList").collection('WatchItems')
         //top-rated-game
-        app.get('/top-rated', async (req, res) => {
-            const result = [
-                {
-                    "_id": "6754f42f66d9dfe1e8f74d1b",
-                    "game_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1CbNB3xqoarlnvuiePeLSRTaEXhnEl1Aeg&s",
-                    "game_title": "WWE 2K14",
-                    "review": "WWE 2K14 is a professional wrestling video game developed by Yuke's and published by 2K for the PlayStation 3 and Xbox 360. It was released on October 29, 2013, in North America, October 30, 2013, in Japan, October 31, 2013, in Australia, and November 1, 2013, in Europe and India. The game's box art features The Rock as the cover athlete.",
-                    "rating": "5",
-                    "publish_year": "2014",
-                    "genres": "Action",
-                    "user_email": "mdmotiurrahman383@gmail.com",
-                    "user_name": "Md Motiur Rahman"
-                },
-                {
-                    "_id": "6754f35466d9dfe1e8f74d1a",
-                    "game_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyJrDBrRNEstswFrQCysT3ijWKwkW703FWMg&s",
-                    "game_title": "Age of Mythology",
-                    "review": "Age of Mythology is a real-time strategy video game developed by Ensemble Studios and published by Microsoft Game Studios. It was released on October 31, 2002 in North America and on November 14, 2002 in Europe.",
-                    "rating": "5",
-                    "publish_year": "2002",
-                    "genres": "RPG",
-                    "user_email": "mdmotiurrahman383@gmail.com",
-                    "user_name": "Md Motiur Rahman"
-                },
-                {
-                    "_id": "675558c4aa2d69671def4670",
-                    "game_image": "https://play-lh.googleusercontent.com/SIhOPLDreTKrf7VWPhvbHlXR78_IZs3965ilMpbBLQ4OqeyfApDdnT_Kxi7kwnx3i7M=w526-h296-rw",
-                    "game_title": "Road Rash",
-                    "review": "Road Rash is a motorcycle racing video game series by Electronic Arts in which the player participates in violent, illegal street races. The series started on the Sega Genesis/Mega Drive and was released on various other systems over the years. The game's title is based on the slang term for the severe friction burns that can occur in a motorcycle fall where skin comes into contact with the ground at high speed.",
-                    "rating": "5",
-                    "publish_year": "2000",
-                    "genres": "RPG",
-                    "user_email": "mdmotiurrahman383@gmail.com",
-                    "user_name": "Md Motiur Rahman"
-                },
-                {
-                    "_id": "67556e07144d2816e9557423",
-                    "game_image": "https://media.contentapi.ea.com/content/dam/need-for-speed/images/2017/06/nfspgenkeyartrgbhorz-16x9.jpg.adapt.crop191x100.1200w.jpg",
-                    "game_title": "Need for Speed (NFS)",
-                    "review": "Need for Speed (NFS) is a racing game franchise published by Electronic Arts and currently developed by Criterion Games (the developers of the Burnout series). The series generally centers around illegal street racing, and tasks players to complete various types of races while evading the local law enforcement in police pursuits. Need for Speed is one of EA's oldest franchises not published under their EA Sports brand.",
-                    "rating": "5",
-                    "publish_year": "2015",
-                    "genres": "RPG",
-                    "user_email": "mdmotiurrahman383@gmail.com",
-                    "user_name": "Md Motiur Rahman"
-                },
-                {
-                    "_id": "67555ab3aa2d69671def4674",
-                    "game_image": "https://th.bing.com/th/id/OIP.XvaeDRGyCeUYJXPR8WkxDQHaEJ?w=285&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                    "game_title": "Marvel's Spider-Man 2",
-                    "review": "Marvel's Spider-Man 2 is a 2023 action-adventure game developed by Insomniac Games and published by Sony Interactive Entertainment. It is based on the Marvel Comics character Spider-Man, and features a narrative inspired by its long-running comic book mythology which is also derived from various adaptations in other media. It is the third entry in the Marvel's Spider-Man series, acting as a sequel to Marvel's Spider-Man (2018) and a follow-up to Marvel's Spider-Man: Miles Morales (2020). The plot follows Peter Parker and Miles Morales as they come into conflict with Kraven the Hunter, who transforms New York City into a hunting ground for super-powered individuals; and with the extraterrestrial Venom symbiote, which bonds itself to Peter and negatively influences him, threatening to destroy his personal relationships.",
-                    "rating": "4",
-                    "publish_year": "2015",
-                    "genres": "RPG",
-                    "user_email": "abc@abc.abc",
-                    "user_name": "abc"
-                },
-                {
-                    "_id": "67555a42aa2d69671def4673",
-                    "game_image": "https://i.ytimg.com/vi/nyHY3Eoa2iA/maxresdefault.jpg",
-                    "game_title": "The House of the Dead 2",
-                    "review": "The House of the Dead 2[a] is a horror-themed light gun shooter arcade game and the second game in The House of the Dead series of video games. The direct sequel to The House of the Dead, it was developed by Sega for arcades on the Sega NAOMI board in November 1998, and it received several home ports, starting with the Dreamcast in 1999, Microsoft Windows in 2001, Xbox in 2002 as a bonus in The House of the Dead III and on Wii as part of the compilation The House of the Dead 2 & 3 Return. It would also serve as the basis for several spinoff games in the franchise, most notably The Typing of the Dead.",
-                    "rating": "4",
-                    "publish_year": "2004",
-                    "genres": "Action",
-                    "user_email": "abc@abc.abc",
-                    "user_name": "abc"
-                }
-            ]
-            res.send(result)
-        })
+          app.get("/top-rated", async (req, res) => {
+      const cursor = GameReviewCollection.find().sort({ rating: -1 }).limit(6);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
         //Post a user
         app.post('/user', async (req, res) => {
             const newuser = req.body;
