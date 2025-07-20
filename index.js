@@ -10,6 +10,9 @@ app.use(express.json({ limit: '50mb' }));
 app.get('/', (req, res) => {
     res.send('Chill Gamer Website is running')
 })
+app.get('/ping',(req,res)=>{
+    res.send(pong)
+})
 //===============================
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rrsefbd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
