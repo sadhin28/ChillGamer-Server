@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send('Chill Gamer Website is running')
 })
 app.get('/ping',(req,res)=>{
-    res.send(pong)
+    res.send('Pong')
 })
 //===============================
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
