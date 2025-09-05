@@ -4,7 +4,11 @@ const port = process.env.PORT || 5000;
 const app = express()
 require('dotenv').config()
 //middlewire
-app.use(cors());
+app.use(cors({
+    origin:  "https://chill-gemer.web.app", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }));
 app.use(express.json({ limit: '50mb' }));
 
 app.get('/', (req, res) => {
